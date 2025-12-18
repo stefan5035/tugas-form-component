@@ -14,7 +14,7 @@ function App() {
       <div class="form-container justify-content-center mt-3 col-sm-auto">
         <h2>Registration Form</h2>
       </div>
-      <div class="border">
+      <div class="d-flex border col-4">
         <form class="m-3">
           <label>First Name</label>
           <input type="text" class="form-control mb-3" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
