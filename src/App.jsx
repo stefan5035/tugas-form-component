@@ -47,12 +47,12 @@ function App() {
 
   return (
     <>
-    <div class="container ">
-      <div class="form-container justify-content-center mt-3 col-sm-auto flex-col d-flex">
+    <div class="container">
+      <div class="form-container">
         <h2>Registration Form</h2>
-        {message && <div className="alert">{message}</div>}
+        {message && <div className="success">{message}</div>}
       </div>
-      <div class="d-flex border flex-col col-4">
+      <div class="border">
         <form class="m-3" onSubmit={handleSubmit}>
           <label>First Name</label>
           <input type="text" class="form-control mb-3" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
@@ -70,7 +70,7 @@ function App() {
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
-      <div class="border d-flex flex-col col-8">
+      <div class="border">
         <p><strong>USER LIST</strong></p>
         <table class="table">
            <thead>
