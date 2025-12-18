@@ -10,12 +10,12 @@ function App() {
  
   return (
     <>
-    <div class="container col-12">
-      <div class="form-container justify-content-center mt-3 col-4">
+    <div class="container col-auto">
+      <div class="form-container justify-content-center mt-3 col-sm-auto">
         <h2>Registration Form</h2>
       </div>
-      <div>
-        <form>
+      <div class="border">
+        <form class="m-3">
           <label>First Name</label>
           <input type="text" class="form-control mb-3" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
           <label>Last Name</label>
@@ -32,7 +32,7 @@ function App() {
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
-      <div class="col-8">
+      <div class="border">
         <p><strong>USER LIST</strong></p>
         <table class="table">
            <thead>
