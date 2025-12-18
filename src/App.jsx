@@ -7,15 +7,53 @@ function App() {
   const [department, setDepartment] = useState('');
   const [address, setAddress] = useState('');
   const [message, setMessage] = useState('');
- 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!firstName) {
+      setMessage('First name is required');
+      return;
+    }
+    if (!lastName) {
+      setMessage('Last Name is required');
+      return;
+    }
+    if (!department) {
+      setMessage('Department is required');
+      return;
+    }
+    if (!address) {
+      setMessage('Address is required');
+      return;
+    }
+    const newUser = {
+      id: users.length + 1,
+      firstName,
+      lastName,
+      department,
+      address,
+    };
+    setUsers([...users, newUser]);
+    setFirstName('');
+    setLastName('');
+    setDepartment('');
+    setAddress('');
+    setMessage('Data has been saved successfully');
+  };
+
+  const handleDelete = (id) => {
+    setUsers(users.filter((user) => user.id !== id));
+  };
+
   return (
     <>
-    <div class="container col-auto">
-      <div class="form-container justify-content-center mt-3 col-sm-auto">
+    <div class="container ">
+      <div class="form-container justify-content-center mt-3 col-sm-auto flex-col d-flex">
         <h2>Registration Form</h2>
+        {message && <div className="alert">{message}</div>}
       </div>
-      <div class="d-flex-cols border col-4">
-        <form class="m-3">
+      <div class="d-flex border flex-col col-4">
+        <form class="m-3" onSubmit={handleSubmit}>
           <label>First Name</label>
           <input type="text" class="form-control mb-3" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
           <label>Last Name</label>
@@ -23,16 +61,16 @@ function App() {
           <label>Department</label>
           <select class="form-select mb-3" value={department} onChange={(e) => setDepartment(e.target.value)}>
             <option selected>Please choose one</option>
-            <option value="data">Data Management</option>
-            <option value="admin">Finance, HR, and Administration</option>
-            <option value="pdo">Product Development and Operation</option>
+            <option value="Data Management">Data Management</option>
+            <option value="Finance, HR, and Administration">Finance, HR, and Administration</option>
+            <option value="Product Development and Operation">Product Development and Operation</option>
           </select>
           <label>Address</label>
           <textarea rows="3" class="form-control mb-3" value={address} onChange={(e) => setAddress(e.target.value)}></textarea>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
-      <div class="border d-flex-col col-8">
+      <div class="border d-flex flex-col col-8">
         <p><strong>USER LIST</strong></p>
         <table class="table">
            <thead>
