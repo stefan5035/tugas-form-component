@@ -14,7 +14,7 @@ function App() {
       <div class="form-container justify-content-center mt-3 col-sm-auto">
         <h2>Registration Form</h2>
       </div>
-      <div class="d-flex border col-4">
+      <div class="d-flex-cols border col-4">
         <form class="m-3">
           <label>First Name</label>
           <input type="text" class="form-control mb-3" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
@@ -28,11 +28,11 @@ function App() {
             <option value="pdo">Product Development and Operation</option>
           </select>
           <label>Address</label>
-          <textarea rows="5" class="form-control mb-3" value={address} onChange={(e) => setAddress(e.target.value)}></textarea>
+          <textarea rows="3" class="form-control mb-3" value={address} onChange={(e) => setAddress(e.target.value)}></textarea>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
-      <div class="border">
+      <div class="border d-flex-col col-8">
         <p><strong>USER LIST</strong></p>
         <table class="table">
            <thead>
