@@ -19,10 +19,12 @@ function App() {
     }
   }, [alert]);
 
+  //handleChange constant to fill in the form
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  //handleSubmit checks if data is correct and passes all four checks, then publishes them to a table
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -142,12 +144,7 @@ function App() {
                       <td>{user.department}</td>
                       <td>{user.address}</td>
                       <td>
-                        <button
-                          className="btn btn-danger btn-sm"
-                          onClick={() => deleteUser(user.id)}
-                        >
-                          Delete
-                        </button>
+                        <button className="btn btn-danger btn-sm" onClick={() => deleteUser(user.id)}>Delete</button>
                       </td>
                     </tr>
                   ))
