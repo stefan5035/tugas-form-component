@@ -1,112 +1,164 @@
-import { useState } from 'react'
+import { useEffect, useState } from "react";
 
 function App() {
   const [users, setUsers] = useState([]);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [department, setDepartment] = useState('');
-  const [address, setAddress] = useState('');
-  const [message, setMessage] = useState('');
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    department: "",
+    address: "",
+  });
+
+  const [alert, setAlert] = useState(null);
+
+  //using useEffect to hide alert
+  useEffect(() => {
+    if (alert) {
+      const timer = setTimeout(() => setAlert(null), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [alert]);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!firstName) {
-      setMessage('First name is required');
+    if (!form.firstName) {
+      setAlert({ type: "danger", message: "First Name is required" });
       return;
     }
-    if (!lastName) {
-      setMessage('Last Name is required');
+    if (!form.lastName) {
+      setAlert({ type: "danger", message: "Last Name is required" });
       return;
     }
-    if (!department) {
-      setMessage('Department is required');
+    if (!form.department) {
+      setAlert({ type: "danger", message: "Department is required" });
       return;
     }
-    if (!address) {
-      setMessage('Address is required');
+    if (!form.address) {
+      setAlert({ type: "danger", message: "Address is required" });
       return;
     }
     const newUser = {
-      id: users.length + 1,
-      firstName,
-      lastName,
-      department,
-      address,
+      id: Date.now(),
+      name: `${form.firstName} ${form.lastName}`,
+      department: form.department,
+      address: form.address,
     };
+
     setUsers([...users, newUser]);
-    setFirstName('');
-    setLastName('');
-    setDepartment('');
-    setAddress('');
-    setMessage('Data has been saved successfully');
+    setForm({ firstName: "", lastName: "", department: "", address: "" });
+    setAlert({ type: "success", message: "Data has been saved successfully" });
   };
 
-  const handleDelete = (id) => {
-    setUsers(users.filter((user) => user.id !== id));
+  const deleteUser = (id) => {
+    setUsers(users.filter((u) => u.id !== id));
   };
 
   return (
-    <>
-    <div class="container">
-      <div class="form-container">
-        <h2>Registration Form</h2>
-        {message && <div className="success">{message}</div>}
-      </div>
-      <div class="border">
-        <form class="m-3" onSubmit={handleSubmit}>
-          <label>First Name</label>
-          <input type="text" class="form-control mb-3" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
-          <label>Last Name</label>
-          <input type="text" class="form-control mb-3" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
-          <label>Department</label>
-          <select class="form-select mb-3" value={department} onChange={(e) => setDepartment(e.target.value)}>
-            <option selected>Please choose one</option>
-            <option value="Data Management">Data Management</option>
-            <option value="Finance, HR, and Administration">Finance, HR, and Administration</option>
-            <option value="Product Development and Operation">Product Development and Operation</option>
-          </select>
-          <label>Address</label>
-          <textarea rows="3" class="form-control mb-3" value={address} onChange={(e) => setAddress(e.target.value)}></textarea>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-      </div>
-      <div class="border">
-        <p><strong>USER LIST</strong></p>
-        <table class="table">
-           <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Department</th>
-              <th scope="col">Address</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-        <tbody class="table-group-divider">
-            {users.length === 0 ? (
-              <tr>
-                <td colSpan="5">Data not found</td>
-              </tr>
-            ) : (
-              users.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
-                  <td>{user.firstName} {user.lastName}</td>
-                  <td>{user.department}</td>
-                  <td>{user.address}</td>
-                  <td>
-                    <button class="btn btn-danger" onClick={() => handleDelete(user.id)}>Delete</button>
-                  </td>
+    <div className="container mt-4">
+      <h2 className="text-center mb-4">Registration Form</h2>
+
+      {alert && (
+        <div className={`alert alert-${alert.type}`} role="alert">
+          {alert.message}
+        </div>
+      )}
+
+      <div className="row">
+        <div className="col-md-4">
+          <div className="card p-3">
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <label className="form-label">First Name</label>
+                <input className="form-control" name="firstName" value={form.firstName} onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Last Name</label>
+                <input className="form-control" name="lastName" value={form.lastName} onChange={handleChange}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Department</label>
+                <select
+                  className="form-select"
+                  name="department"
+                  value={form.department}
+                  onChange={handleChange}
+                >
+                  <option value="">Please choose one</option>
+                  <option>Finance</option>
+                  <option>HR & Administration</option>
+                  <option>IT</option>
+                </select>
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Address</label>
+                <textarea
+                  className="form-control"
+                  rows="3"
+                  name="address"
+                  value={form.address}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <button className="btn btn-primary w-100">Submit</button>
+            </form>
+          </div>
+        </div>
+        <div className="col-md-8">
+          <div className="card p-3">
+            <div className="card-header bg-secondary"><strong>USER LIST</strong></div>
+            <p></p>
+            <table className="table mt-3">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Department</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Action</th>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {users.length === 0 ? (
+                  <tr>
+                    <td colSpan="5" className="text-center">
+                      Data not found
+                    </td>
+                  </tr>
+                ) : (
+                  users.map((user, index) => (
+                    <tr key={user.id}>
+                      <td>{index + 1}</td>
+                      <td>{user.name}</td>
+                      <td>{user.department}</td>
+                      <td>{user.address}</td>
+                      <td>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => deleteUser(user.id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
-      
-    </>
-  )
+  );
 }
 
 export default App;
