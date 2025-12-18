@@ -10,8 +10,8 @@ function App() {
  
   return (
     <>
-    <div class="container">
-      <div class="form-container mt-3">
+    <div class="container col-12">
+      <div class="form-container justify-content-center mt-3 col-4">
         <h2>Registration Form</h2>
       </div>
       <div>
@@ -32,19 +32,19 @@ function App() {
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
-      <div class="table-container">
-        <h2>Users List</h2>
-        <table>
+      <div class="col-8">
+        <p><strong>USER LIST</strong></p>
+        <table class="table">
            <thead>
             <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Department</th>
-              <th>Address</th>
-              <th>Action</th>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Department</th>
+              <th scope="col">Address</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
-        <tbody>
+        <tbody class="table-group-divider">
             {users.length === 0 ? (
               <tr>
                 <td colSpan="5">Data not found</td>
@@ -57,7 +57,7 @@ function App() {
                   <td>{user.department}</td>
                   <td>{user.address}</td>
                   <td>
-                    <button onClick={() => handleDelete(user.id)}>Delete</button>
+                    <button class="btn btn-danger" onClick={() => handleDelete(user.id)}>Delete</button>
                   </td>
                 </tr>
               ))
@@ -71,4 +71,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
