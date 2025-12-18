@@ -32,8 +32,38 @@ function App() {
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
-      <div>
-        <table></table>
+      <div class="table-container">
+        <h2>Users List</h2>
+        <table>
+           <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Department</th>
+              <th>Address</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+        <tbody>
+            {users.length === 0 ? (
+              <tr>
+                <td colSpan="5">Data not found</td>
+              </tr>
+            ) : (
+              users.map((user) => (
+                <tr key={user.id}>
+                  <td>{user.id}</td>
+                  <td>{user.firstName} {user.lastName}</td>
+                  <td>{user.department}</td>
+                  <td>{user.address}</td>
+                  <td>
+                    <button onClick={() => handleDelete(user.id)}>Delete</button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
       
